@@ -3,15 +3,15 @@ from Field import Field
 
 
 class Game:
-    def __init__(self):
+    def __init__(self, map_size=300, seed=1234, possibility=0.3):
         pygame.init()
         self.screen_size = (1200, 1200)
         self.screen = pygame.display.set_mode(self.screen_size)
 
-        self.field = Field(self.screen, self.screen_size)
+        self.field = Field(self.screen, self.screen_size, map_size, seed, possibility)
         self.gameover = False
 
-    def start(self) -> None:
+    def start(self, delay=500) -> None:
         while not self.gameover:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -21,7 +21,7 @@ class Game:
 
             self.field.draw()
 
-            pygame.time.wait(100)
+            pygame.time.wait(delay)
             pygame.display.flip()
 
         return

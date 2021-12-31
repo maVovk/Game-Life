@@ -27,8 +27,8 @@ class Cell:
         self.future_status = new_status
 
     def apply(self):
-        if self.future_status is not None:
-            self.current_status = self.future_status
-            self.future_status = None
-        else:
-            raise ValueError
+        # if self.future_status is not None:
+        self.current_status = self.future_status
+        self.future_status = 'empty'
+        # else:
+        #     raise ValueError

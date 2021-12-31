@@ -4,8 +4,8 @@ import Cell
 
 
 class Field:
-    def __init__(self, screen: pygame.display, screen_size: tuple, seed=1234, possibility=0.3):
-        self.map_size = 300
+    def __init__(self, screen: pygame.display, screen_size: tuple, map_size=300, seed=1234, possibility=0.3):
+        self.map_size = map_size
         self.cell_size = screen_size[0] // self.map_size
         self.map = []
         self.screen = screen
@@ -36,15 +36,19 @@ class Field:
                 self.map[x][y - 1].get_status() + self.map[x][y+1].get_status() +\
                 self.map[x+1][y-1].get_status() + self.map[x+1][y].get_status() + self.map[x+1][y+1].get_status()
 
-        if 2 <= summ <= 3 and self.map[x][y].get_status():
+        if 2 <= summ <= 3 and self.map[x][y].get_status() == 1:
             self.map[x][y].set_status('alive')
-        if summ == 3 and not self.map[x][y].get_status():
+        elif summ == 3 and self.map[x][y].get_status() == 0:
             self.map[x][y].set_status('alive')
-        if summ < 2 or summ > 4:
-            self.map[x][y].set_status('dead')
+        elif summ < 2 or summ >= 4:
+            self.map[x][y].set_status('empty')
 
     def draw(self) -> None:
         for i in range(1, self.map_size-1):
             for j in range(1, self.map_size-1):
                 self.check_cell(i, j)
                 self.map[i][j].draw(self.screen, self.cell_size)
+
+        for i in range(1, self.map_size-1):
+            for j in range(1, self.map_size-1):
+                self.map[i][j].apply()

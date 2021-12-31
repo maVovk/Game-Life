@@ -2,11 +2,9 @@ from Game import Game
 
 
 def main():
-    # print('Start!')
-    seed = 1234
-    game = Game()
+    game = Game(map_size=300, seed=1, possibility=0.2)
 
-    game.start()
+    game.start(delay=300)
 
 
 if __name__ == '__main__':
